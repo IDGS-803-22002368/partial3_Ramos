@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Flask-Login Demo{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <nav class="bg-white border-gray-200 dark:bg-gray-800 shadow-md">
+      <div
+        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+      >
+        <a href="{{ url_for('index') }}" class="flex items-center">
+          <span
+            class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
+            >Login Flask</span
+          >
+        </a>
+        <div class="flex md:order-2">
+          {% if current_user.is_authenticated %}
+          <span class="mr-4 text-gray-700 dark:text-white"
+            >Bienvenido, {{ current_user.username }}</span
+          >
+          <a
+            href="{{ url_for('logout') }}"
+            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+            >Cerrar Sesion</a
+          >
+          {% else %}
+          <a
+            href="{{ url_for('login') }}"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >Iniciar Sesion</a
+          >
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <div class="max-w-screen-xl mx-auto p-4">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %} {% set alert_color =
+      "blue" %} {% if category == "success" %} {% set alert_color = "green" %}
+      {% elif category == "error" %} {% set alert_color = "red" %} {% elif
+      category == "warning" %} {% set alert_color = "yellow" %} {% elif category
+      == "info" %} {% set alert_color = "blue" %} {% endif %}
+      <div
+        id="alert-{{ loop.index }}"
+        class="flex p-4 mb-4 text-{{ alert_color }}-800 border-t-4 border-{{ alert_color }}-300 bg-{{ alert_color }}-50 dark:text-{{ alert_color }}-400 dark:bg-gray-800 dark:border-{{ alert_color }}-800"
+        role="alert"
+      >
+        <div class="ml-3 text-sm font-medium">{{ message }}</div>
+        <button
+          type="button"
+          class="ml-auto -mx-1.5 -my-1.5 bg-{{ alert_color }}-50 text-{{ alert_color }}-500 rounded-lg focus:ring-2 focus:ring-{{ alert_color }}-400 p-1.5 hover:bg-{{ alert_color }}-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-{{ alert_color }}-400 dark:hover:bg-gray-700"
+          data-dismiss-target="#alert-{{ loop.index }}"
+          aria-label="Close"
+        >
+          <span class="sr-only">Cerrar</span>
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+    </div>
+
+    <main class="max-w-screen-xl mx-auto">
+      {% block content %}{% endblock %}
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+  </body>
+</html>

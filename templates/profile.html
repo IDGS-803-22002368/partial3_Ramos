@@ -1,0 +1,22 @@
+{% extends "layout.html" %} {% block title %}Perfil de Usuario{% endblock %} {%
+block content %}
+<div class="bg-white shadow-md rounded-lg p-6 dark:bg-gray-800">
+  <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+    Perfil de {{ current_user.username }}
+  </h1>
+  <div class="space-y-4">
+    <p class="text-gray-700 dark:text-gray-300 mb-6">
+      <strong>Nombre de usuario:</strong> {{ current_user.username }}
+    </p>
+  </div>
+
+  <div class="flex space-x-4">
+    <a
+      href="{{ url_for('dashboard') }}"
+      class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+    >
+      Volver al Dashboard
+    </a>
+  </div>
+</div>
+{% endblock %}
